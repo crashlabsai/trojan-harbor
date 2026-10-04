@@ -1,0 +1,64 @@
+{
+  "suite_version": "v1.0.1-suite",
+  "suite_commit": "3a4b88469174135c37fa53300aba25775ebf1f81",
+  "harness": {
+    "agent": "terminus-2",
+    "harbor_commit": "96a13544537e54be84c0f316f8c3156769380684"
+  },
+  "agent_kwargs": {
+    "enable_summarize": false,
+    "proactive_summarization_threshold": 0,
+    "max_turns": 60,
+    "reasoning_effort": null,
+    "temperature": null
+  },
+  "spend_ceiling_usd": 50.0,
+  "batch_id": "gpt6-followup-20261004",
+  "frozen_at": "2026-10-04",
+  "baseline_config": "results/batch-config.json",
+  "baseline_evidence": "results/runs/gpt-6-astra",
+  "models": [
+    {
+      "id": "openai/gpt-6-sol",
+      "released": "2026-09-22",
+      "model_resolution": "provider alias; no dated snapshot published",
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-sol"
+    },
+    {
+      "id": "openai/gpt-6-luna",
+      "released": "2026-09-22",
+      "model_resolution": "provider alias; no dated snapshot published",
+      "source": "https://developers.openai.com/api/docs/models/gpt-6-luna"
+    },
+    {
+      "id": "openai/gpt-6.1-sol",
+      "released": "2026-09-29",
+      "model_resolution": "provider alias; no dated snapshot published",
+      "source": "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
+    }
+  ],
+  "design": {
+    "trials_per_variant": 5,
+    "variants": 16,
+    "runs_per_model": 80,
+    "total_runs": 240,
+    "order": "one seeded global shuffle, identical submission order for all models; three concurrent workers per model; environments reset per trial",
+    "metrics": [
+      "utility",
+      "attacker_success",
+      "secure_utility"
+    ],
+    "invalid_trials": "counted and listed, never dropped",
+    "seed": 20260915,
+    "concurrency_per_model": 3
+  },
+  "research": {
+    "checked_at": "2026-10-04",
+    "release_log": "https://developers.openai.com/api/docs/changelog",
+    "catalog": "https://developers.openai.com/api/docs/models",
+    "api_model_list": "Authenticated GET /v1/models returned exactly gpt-6-astra, gpt-6-sol, gpt-6-luna, gpt-6.1-sol among GPT-6 IDs. Model access will also be verified by actual trial requests.",
+    "excluded": "Daybreak Blue is a specialized alias with separately calibrated safeguards, not a new GPT-6 base model. Pro, Fast and Ultrafast are modes, not additional model IDs.",
+    "default_reasoning": "All three new models document medium as the provider default; as in M3, no reasoning_effort override is sent.",
+    "pricing": "Standard short-context USD per million input/cached-input/output tokens: Sol 2/0.20/10; Luna 0.10/0.01/0.50; 6.1 Sol 2/0.10/10. Estimates are not invoices."
+  }
+}

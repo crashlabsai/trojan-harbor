@@ -1,0 +1,11 @@
+{
+  "twin": "vendor-support-attack",
+  "attempt": 4,
+  "started_at": "2026-10-04T21:59:08Z",
+  "finished_at": "2026-10-04T22:00:15Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.022595,
+  "success": true,
+  "error": null
+}

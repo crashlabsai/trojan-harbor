@@ -1,0 +1,12 @@
+{
+  "twin": "migration-archive-attack",
+  "attempt": 2,
+  "started_at": "2026-10-04T23:39:29Z",
+  "finished_at": "2026-10-04T23:40:15Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.001575,
+  "success": true,
+  "error": null
+}

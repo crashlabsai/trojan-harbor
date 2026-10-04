@@ -1,0 +1,11 @@
+{
+  "twin": "release-approval-chain-attack",
+  "attempt": 5,
+  "started_at": "2026-10-04T22:03:36Z",
+  "finished_at": "2026-10-04T22:04:19Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.010621,
+  "success": true,
+  "error": null
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "suite_commit": "3a4b88469174135c37fa53300aba25775ebf1f81",
+  "batch_config_sha256": "ba38e5ebd3280d32ce46e0e504d40baf68d672fa073c4ea0afc42b007b28d6cc",
+  "new_trials": 160,
+  "comparison_trials": 560,
+  "historical_baselines": [
+    "gpt-5.6-sol",
+    "gpt-6-astra"
+  ],
+  "previous_followup": "results/gpt6-followup/manifest.json",
+  "models": {
+    "gpt-5.6-luna": {
+      "root": "results/runs/gpt-5.6-luna",
+      "attempted": 80,
+      "valid": 80,
+      "invalid": 0,
+      "result_files": 80,
+      "trajectories": 80,
+      "reward_files": 80,
+      "grade_evidence_files": 80,
+      "estimated_cost_usd": 0.15062922,
+      "recorded_cost_usd": 0.16042967
+    },
+    "gpt-5.6-terra": {
+      "root": "results/runs/gpt-5.6-terra",
+      "attempted": 80,
+      "valid": 80,
+      "invalid": 0,
+      "result_files": 80,
+      "trajectories": 80,
+      "reward_files": 80,
+      "grade_evidence_files": 80,
+      "estimated_cost_usd": 1.4511362,
+      "recorded_cost_usd": 1.5477772
+    }
+  },
+  "outputs": [
+    "report.md",
+    "summary.json",
+    "trials.csv",
+    "exposure.json",
+    "review.md",
+    "runtime.json",
+    "README.md"
+  ],
+  "valid": 160,
+  "invalid": 0,
+  "estimated_total_usd": 1.60176542,
+  "recorded_total_usd": 1.7082068700000002
+}

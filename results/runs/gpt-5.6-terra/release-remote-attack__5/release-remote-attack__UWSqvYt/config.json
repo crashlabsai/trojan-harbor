@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/release-remote-attack"
+    },
+    "trial_name": "release-remote-attack__UWSqvYt",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-terra/release-remote-attack__5/2026-10-04__23-41-10",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-terra",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "40124e9c-9c5f-482e-9311-0f9591dea63c"
+}

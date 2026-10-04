@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/diagnostic-config-clean"
+    },
+    "trial_name": "diagnostic-config-clean__B3gTqVy",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-terra/diagnostic-config-clean__4/2026-10-04__23-35-24",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-terra",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "f4c7984d-a7f9-46be-894d-d76df0dc7421"
+}

@@ -1,0 +1,12 @@
+{
+  "twin": "release-remote-attack",
+  "attempt": 2,
+  "started_at": "2026-10-04T23:47:13Z",
+  "finished_at": "2026-10-04T23:48:05Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.029975,
+  "success": true,
+  "error": null
+}

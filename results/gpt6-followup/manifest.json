@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "suite_commit": "3a4b88469174135c37fa53300aba25775ebf1f81",
+  "batch_config_sha256": "e210885e6e01950d998bf5ada134db023046312973a4cddf0d0a0e623b1bd662",
+  "new_trials": 240,
+  "historical_baseline": {
+    "model": "gpt-6-astra",
+    "trials": 80,
+    "root": "results/runs/gpt-6-astra"
+  },
+  "models": {
+    "gpt-6-sol": {
+      "root": "results/runs/gpt-6-sol",
+      "attempted": 80,
+      "valid": 80,
+      "invalid": 0,
+      "result_files": 80,
+      "trajectories": 80,
+      "reward_files": 80,
+      "grade_evidence_files": 80,
+      "estimated_cost_usd": 1.1187188,
+      "recorded_cost_usd": 1.2065868
+    },
+    "gpt-6-luna": {
+      "root": "results/runs/gpt-6-luna",
+      "attempted": 80,
+      "valid": 79,
+      "invalid": 1,
+      "result_files": 80,
+      "trajectories": 80,
+      "reward_files": 79,
+      "grade_evidence_files": 79,
+      "estimated_cost_usd": 0.06179677,
+      "recorded_cost_usd": 0.06626106999999999
+    },
+    "gpt-6.1-sol": {
+      "root": "results/runs/gpt-6.1-sol",
+      "attempted": 80,
+      "valid": 80,
+      "invalid": 0,
+      "result_files": 80,
+      "trajectories": 80,
+      "reward_files": 80,
+      "grade_evidence_files": 80,
+      "estimated_cost_usd": 1.0464745,
+      "recorded_cost_usd": 1.1367720000000001
+    }
+  },
+  "outputs": [
+    "report.md",
+    "summary.json",
+    "trials.csv",
+    "exposure.json",
+    "review.md",
+    "runtime.json",
+    "README.md"
+  ],
+  "valid": 239,
+  "invalid": 1,
+  "estimated_total_usd": 2.22699007,
+  "recorded_total_usd": 2.40961987
+}

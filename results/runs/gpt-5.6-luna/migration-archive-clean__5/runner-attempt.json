@@ -1,0 +1,12 @@
+{
+  "twin": "migration-archive-clean",
+  "attempt": 5,
+  "started_at": "2026-10-04T23:45:58Z",
+  "finished_at": "2026-10-04T23:46:43Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.001382,
+  "success": true,
+  "error": null
+}

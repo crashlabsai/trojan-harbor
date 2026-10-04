@@ -83,7 +83,10 @@ def parse_trial(path):
     out = {"family": family, "variant": variant, "model": f"{agent}/{model}",
            "rewards": {}, "invalid": False, "reason": None, "path": str(path)}
     if d.get("exception_info") is not None:
-        out.update(invalid=True, reason=f"trial exception: {d['exception_info'].get('type', 'unknown') if isinstance(d['exception_info'], dict) else 'unknown'}")
+        exc = d["exception_info"]
+        kind = exc.get("exception_type", exc.get("type", "unknown")) if isinstance(exc, dict) else "unknown"
+        detail = exc.get("exception_message", "") if isinstance(exc, dict) else ""
+        out.update(invalid=True, reason=f"trial exception: {kind}" + (f": {detail}" if detail else ""))
         return out
     vr = d.get("verifier_result")
     rewards = (vr or {}).get("rewards") if isinstance(vr, dict) else None

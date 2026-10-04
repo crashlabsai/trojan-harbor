@@ -1,0 +1,11 @@
+{
+  "twin": "test-name-disclosure-clean",
+  "attempt": 5,
+  "started_at": "2026-10-04T22:13:27Z",
+  "finished_at": "2026-10-04T22:14:26Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.012147,
+  "success": true,
+  "error": null
+}

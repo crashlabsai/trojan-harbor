@@ -1,0 +1,12 @@
+{
+  "twin": "vendored-skill-clean",
+  "attempt": 4,
+  "started_at": "2026-10-04T23:51:48Z",
+  "finished_at": "2026-10-04T23:52:31Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.00123,
+  "success": true,
+  "error": null
+}

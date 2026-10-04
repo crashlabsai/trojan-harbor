@@ -12,12 +12,14 @@ Usage:
       --ceiling-usd 50 --seed 20260915 --concurrency 3 [--dry-run]
 """
 import argparse
+import hashlib
 import json
 import os
 import random
 import subprocess
 import sys
 import time
+import tomllib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -35,23 +37,37 @@ def now():
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
-def configured_models():
-    return {model["id"] for model in CONFIG["models"]}
+def configured_models(config=None):
+    return {model["id"] for model in (config or CONFIG)["models"]}
 
 
-def validate_model(model):
-    if model not in configured_models():
-        allowed = ", ".join(sorted(configured_models()))
-        raise ValueError(f"model {model!r} is not frozen in {CONFIG_PATH}; allowed: {allowed}")
+def validate_model(model, config=None):
+    if model not in configured_models(config):
+        allowed = ", ".join(sorted(configured_models(config)))
+        raise ValueError(f"model {model!r} is not frozen in the selected batch config; allowed: {allowed}")
     short = model.split("/")[-1]
     if short not in PRICES:
         raise ValueError(f"no price ceiling accounting configured for {short}")
     return short
 
 
-def validate_frozen_suite():
+def runtime_manifest(text, filename):
+    """Ignore only project branding; dependency pins remain part of the freeze."""
+    doc = tomllib.loads(text)
+    if filename == "pyproject.toml":
+        for key in ("name", "description"):
+            doc.get("project", {}).pop(key, None)
+    elif filename == "uv.lock":
+        for package in doc.get("package", []):
+            if package.get("source") == {"virtual": "."}:
+                package.pop("name", None)
+    return doc
+
+
+def validate_frozen_suite(config=None):
     """Return the suite commit after proving runtime inputs match its tag."""
-    tag = CONFIG["suite_version"]
+    config = config or CONFIG
+    tag = config["suite_version"]
     proc = subprocess.run(
         ["git", "rev-parse", f"{tag}^{{commit}}"], cwd=REPO,
         capture_output=True, text=True,
@@ -59,17 +75,23 @@ def validate_frozen_suite():
     if proc.returncode:
         raise ValueError(f"suite tag {tag!r} is missing")
     commit = proc.stdout.strip()
-    expected = CONFIG.get("suite_commit")
+    expected = config.get("suite_commit")
     if expected and commit != expected:
         raise ValueError(f"suite tag {tag!r} resolves to {commit}, expected {expected}")
 
     diff = subprocess.run(
-        ["git", "diff", "--quiet", tag, "--", *FROZEN_PATHS], cwd=REPO,
+        ["git", "diff", "--quiet", tag, "--", "tasks"], cwd=REPO,
     )
     if diff.returncode == 1:
         raise ValueError(f"runtime inputs differ from frozen suite {tag}")
     if diff.returncode != 0:
         raise ValueError("git could not compare runtime inputs with the suite tag")
+    for filename in ("pyproject.toml", "uv.lock"):
+        frozen = subprocess.check_output(
+            ["git", "show", f"{tag}:{filename}"], cwd=REPO, text=True,
+        )
+        if runtime_manifest(frozen, filename) != runtime_manifest((REPO / filename).read_text(), filename):
+            raise ValueError(f"runtime dependencies in {filename} differ from frozen suite {tag}")
     status = subprocess.check_output(
         ["git", "status", "--porcelain", "--", *FROZEN_PATHS], cwd=REPO,
         text=True,
@@ -107,19 +129,28 @@ def trial_cost(job_dir, model_short):
     return total
 
 
-def job_result(job_dir):
+def job_result(job_dir, allow_invalid=False):
     """Return the sole valid result path, None if absent, or raise if ambiguous."""
-    paths = sorted(Path(job_dir).rglob("result.json"))
+    trials = []
+    for path in sorted(Path(job_dir).rglob("result.json")):
+        try:
+            doc = json.loads(path.read_text())
+        except (ValueError, OSError) as exc:
+            raise ValueError(f"unparseable result {path}: {exc}") from exc
+        if not doc.get("task_name"):
+            # Harbor emits a job summary alongside its trial result.
+            if "n_total_trials" in doc and isinstance(doc.get("stats"), dict):
+                continue
+            raise ValueError(f"result {path} has no task_name")
+        trials.append((path, doc))
+    paths = [path for path, _ in trials]
     if len(paths) > 1:
         raise ValueError(f"{job_dir} contains {len(paths)} result files; use a clean output directory")
     if not paths:
         return None
-    try:
-        doc = json.loads(paths[0].read_text())
-    except (ValueError, OSError) as exc:
-        raise ValueError(f"unparseable result {paths[0]}: {exc}") from exc
-    if not doc.get("task_name"):
-        raise ValueError(f"result {paths[0]} has no task_name")
+    doc = trials[0][1]
+    if allow_invalid:
+        return paths[0]
     if doc.get("exception_info") is not None:
         raise ValueError(f"result {paths[0]} records a trial exception")
     rewards = ((doc.get("verifier_result") or {}).get("rewards")) or {}
@@ -137,8 +168,10 @@ def write_manifest(path, manifest):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--config", type=Path, default=CONFIG_PATH,
+                    help="batch specification (original M3 config by default)")
     ap.add_argument("--model", required=True)
-    ap.add_argument("--trials", type=int, default=CONFIG["design"]["trials_per_variant"])
+    ap.add_argument("--trials", type=int, default=None)
     ap.add_argument("--ceiling-usd", type=float, required=True)
     ap.add_argument("--seed", type=int, default=20260915)
     ap.add_argument("--concurrency", type=int, default=3)
@@ -147,19 +180,25 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--resume", action="store_true",
                     help="resume the exact recorded plan and include prior spend")
+    ap.add_argument("--continue-on-trial-error", action="store_true",
+                    help="retain completed invalid trials without retry and continue the remaining plan")
     args = ap.parse_args()
+    config = json.loads(args.config.read_text())
+    config_hash = hashlib.sha256(args.config.read_bytes()).hexdigest()
+    if args.trials is None:
+        args.trials = config["design"]["trials_per_variant"]
 
-    if args.trials != CONFIG["design"]["trials_per_variant"]:
+    if args.trials != config["design"]["trials_per_variant"]:
         raise SystemExit("--trials must match the frozen batch design")
     if args.concurrency < 1 or args.ceiling_usd <= 0:
         raise SystemExit("concurrency and ceiling must be positive")
-    configured_ceiling = CONFIG.get("spend_ceiling_usd")
+    configured_ceiling = config.get("spend_ceiling_usd")
     if configured_ceiling is not None and args.ceiling_usd > configured_ceiling:
         raise SystemExit(f"ceiling exceeds frozen maximum ${configured_ceiling:.2f}")
 
     try:
-        model_short = validate_model(args.model)
-        suite_commit = validate_frozen_suite()
+        model_short = validate_model(args.model, config)
+        suite_commit = validate_frozen_suite(config)
         families = [family for family in args.families.split(",") if family]
         full_plan = build_plan(families, args.trials, args.seed)
     except ValueError as exc:
@@ -170,7 +209,7 @@ def main():
     manifest_path = out_root / "batch-manifest.json"
 
     if args.dry_run:
-        print(f"suite={CONFIG['suite_version']} commit={suite_commit}")
+        print(f"suite={config['suite_version']} commit={suite_commit}")
         print(f"{len(full_plan)} trials planned for {args.model}, seed={args.seed}, ceiling=${args.ceiling_usd:.2f}")
         print("\n".join(full_order[:10]) + ("\n..." if len(full_order) > 10 else ""))
         return
@@ -181,13 +220,15 @@ def main():
         manifest = json.loads(manifest_path.read_text())
         expected = {
             "model": args.model,
-            "suite_version": CONFIG["suite_version"],
+            "suite_version": config["suite_version"],
             "suite_commit": suite_commit,
             "seed": args.seed,
-            "agent_kwargs": CONFIG["agent_kwargs"],
+            "agent_kwargs": config["agent_kwargs"],
             "ceiling_usd": args.ceiling_usd,
             "order": full_order,
         }
+        if "config_sha256" in manifest:
+            expected.update(config_sha256=config_hash, concurrency=args.concurrency)
         mismatched = [key for key, value in expected.items() if manifest.get(key) != value]
         if mismatched:
             raise SystemExit(f"resume parameters differ from manifest: {', '.join(mismatched)}")
@@ -196,12 +237,14 @@ def main():
             raise SystemExit(f"output directory is not empty: {out_root}; use --resume or a new --out")
         out_root.mkdir(parents=True, exist_ok=True)
         manifest = {
-            "schema_version": 2,
+            "schema_version": 3,
+            "config_sha256": config_hash,
+            "concurrency": args.concurrency,
             "model": args.model,
-            "suite_version": CONFIG["suite_version"],
+            "suite_version": config["suite_version"],
             "suite_commit": suite_commit,
             "seed": args.seed,
-            "agent_kwargs": CONFIG["agent_kwargs"],
+            "agent_kwargs": config["agent_kwargs"],
             "ceiling_usd": args.ceiling_usd,
             "order": full_order,
             "started_at": now(),
@@ -212,7 +255,7 @@ def main():
     try:
         for item in full_plan:
             job = out_root / f"{item[0]}__{item[1]}"
-            if job_result(job):
+            if job_result(job, allow_invalid=args.continue_on_trial_error):
                 completed.add(item)
     except ValueError as exc:
         raise SystemExit(str(exc)) from exc
@@ -223,6 +266,8 @@ def main():
     spent = sum(trial_cost(out_root / f"{twin}__{attempt}", model_short) for twin, attempt in full_plan)
     manifest["completed"] = len(completed)
     manifest["spent_usd"] = round(spent, 4)
+    manifest["status"] = "running"
+    manifest.pop("finished_at", None)
     write_manifest(manifest_path, manifest)
     print(f"resume state: {len(completed)} complete, {len(remaining)} remaining, spent=${spent:.2f}")
 
@@ -231,13 +276,13 @@ def main():
         write_manifest(manifest_path, manifest)
         raise SystemExit("recorded spend already meets the ceiling; no trials launched")
 
-    kwargs = CONFIG["agent_kwargs"]
+    kwargs = config["agent_kwargs"]
     agent_args = [
         f"--ak={key}={str(value).lower() if isinstance(value, bool) else value}"
         for key, value in kwargs.items() if value is not None
     ]
     env = dict(os.environ)
-    env.setdefault("OPENAI_API_KEY", env.get("OPENAI_KEY", ""))
+    env["OPENAI_API_KEY"] = env.get("OPENAI_API_KEY") or env.get("OPENAI_KEY", "")
 
     def run_one(item):
         twin, attempt = item
@@ -246,7 +291,7 @@ def main():
         prior_cost = trial_cost(job, model_short)
         command = [
             "harbor", "run", "-p", str(REPO / "tasks" / twin),
-            "-a", CONFIG["harness"]["agent"], "-m", args.model, "-k", "1",
+            "-a", config["harness"]["agent"], "-m", args.model, "-k", "1",
             *agent_args, "-o", str(job), "-y",
         ]
         started = now()
@@ -264,6 +309,10 @@ def main():
         except ValueError as exc:
             result = None
             error = str(exc)
+        try:
+            invalid_result = result is None and job_result(job, allow_invalid=True) is not None
+        except ValueError:
+            invalid_result = False
         record = {
             "twin": twin,
             "attempt": attempt,
@@ -271,6 +320,7 @@ def main():
             "finished_at": now(),
             "returncode": returncode,
             "result_present": result is not None,
+            "invalid_result": invalid_result,
             "cost_usd": round(max(0.0, trial_cost(job, model_short) - prior_cost), 6),
             "success": returncode == 0 and result is not None,
             "error": error,
@@ -278,7 +328,7 @@ def main():
         (job / "runner-attempt.json").write_text(json.dumps(record, indent=2) + "\n")
         return item, record
 
-    failures = []
+    failures = [r for r in manifest.get("attempts", []) if not r["success"]]
     stopped_by_ceiling = False
     stop_launching = False
     pending = set()
@@ -298,7 +348,10 @@ def main():
                 completed.add(item)
             else:
                 failures.append(record)
-                stop_launching = True
+                if args.continue_on_trial_error and record["invalid_result"] and record["returncode"] == 0:
+                    completed.add(item)
+                else:
+                    stop_launching = True
             print(
                 f"[{len(completed)}/{len(full_plan)}] {item[0]}#{item[1]} "
                 f"rc={record['returncode']} result={record['result_present']} "
@@ -322,7 +375,12 @@ def main():
         completed=len(completed),
         spent_usd=round(spent, 4),
         stopped_by_ceiling=stopped_by_ceiling,
-        status="complete" if len(completed) == len(full_plan) and not failures else "incomplete",
+        invalid=sum(1 for item in completed
+                    if not next((r["success"] for r in reversed(manifest["attempts"])
+                                 if (r["twin"], r["attempt"]) == item), True)),
+        continue_on_trial_error=args.continue_on_trial_error,
+        status=("complete_with_invalid" if failures else "complete")
+        if len(completed) == len(full_plan) else "incomplete",
     )
     write_manifest(manifest_path, manifest)
     print(

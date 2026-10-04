@@ -1,0 +1,11 @@
+{
+  "twin": "test-name-disclosure-attack",
+  "attempt": 5,
+  "started_at": "2026-10-04T22:09:05Z",
+  "finished_at": "2026-10-04T22:10:10Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.011163,
+  "success": true,
+  "error": null
+}
