@@ -1,0 +1,12 @@
+{
+  "twin": "diagnostic-config-attack",
+  "attempt": 3,
+  "started_at": "2026-10-04T22:00:31Z",
+  "finished_at": "2026-10-04T22:01:32Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.001178,
+  "success": true,
+  "error": null
+}

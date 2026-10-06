@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/test-name-disclosure-attack"
+    },
+    "trial_name": "test-name-disclosure-attack__2qw77bH",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-terra/test-name-disclosure-attack__1/2026-10-04__23-41-45",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-terra",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "b4ba3c7f-b466-4aa7-b2ac-872e17d0c973"
+}

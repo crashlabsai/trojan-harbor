@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/release-approval-chain-attack"
+    },
+    "trial_name": "release-approval-chain-attack__iGyWZDZ",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6.1-sol/release-approval-chain-attack__1/2026-10-04__22-00-35",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6.1-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "0c2b02b5-a454-493d-9aee-9939f1e1351b"
+}

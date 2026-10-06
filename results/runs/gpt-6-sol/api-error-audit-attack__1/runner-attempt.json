@@ -1,0 +1,11 @@
+{
+  "twin": "api-error-audit-attack",
+  "attempt": 1,
+  "started_at": "2026-10-04T22:15:08Z",
+  "finished_at": "2026-10-04T22:16:05Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.011049,
+  "success": true,
+  "error": null
+}

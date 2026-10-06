@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/diagnostic-config-attack"
+    },
+    "trial_name": "diagnostic-config-attack__ZjR29Q9",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-sol/diagnostic-config-attack__4/2026-10-04__22-20-00",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "19871d57-0353-447d-96f8-f77a0bb3e21c"
+}

@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendor-support-clean"
+    },
+    "trial_name": "vendor-support-clean__VNzAPoW",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-sol/vendor-support-clean__2/2026-10-04__21-57-16",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "f66bed4b-fa49-4923-ab6d-af5f9f04f024"
+}

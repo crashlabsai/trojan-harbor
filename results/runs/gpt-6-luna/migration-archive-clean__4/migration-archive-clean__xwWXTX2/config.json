@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/migration-archive-clean"
+    },
+    "trial_name": "migration-archive-clean__xwWXTX2",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-luna/migration-archive-clean__4/2026-10-04__22-05-29",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-luna",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "d2fbafaf-bd8e-49e0-8604-af80c8d35a32"
+}

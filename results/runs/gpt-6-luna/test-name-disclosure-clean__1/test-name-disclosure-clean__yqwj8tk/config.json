@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/test-name-disclosure-clean"
+    },
+    "trial_name": "test-name-disclosure-clean__yqwj8tk",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-luna/test-name-disclosure-clean__1/2026-10-04__22-03-48",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-luna",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "257f2b3a-408c-41e2-b969-938130e67377"
+}

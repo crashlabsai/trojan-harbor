@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/release-approval-chain-clean"
+    },
+    "trial_name": "release-approval-chain-clean__HhxmTk9",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-sol/release-approval-chain-clean__1/2026-10-04__22-11-05",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "4cd9560c-05ed-4d4d-a6cf-99fe34f2f622"
+}

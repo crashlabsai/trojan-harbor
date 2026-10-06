@@ -35,6 +35,18 @@ Full metrics, Wilson intervals, costs, provenance, and limits:
 [`results/report-m3.md`](results/report-m3.md). Concise narrative:
 [`APPLICATION.md`](APPLICATION.md).
 
+The October 4 follow-up evaluates **GPT-6 Sol, GPT-6 Luna, and GPT-6.1 Sol**
+with the same 80-trial protocol per model and compares them with the archived
+Astra baseline. See the [comparison report](results/gpt6-followup/report.md)
+for outcomes, latency, tokens, and cost, and the
+[reproduction instructions](results/gpt6-followup/README.md) for commands and
+model-release sources.
+
+The [Luna/Terra extension](results/luna-terra-followup/README.md) adds
+GPT-5.6 Luna and GPT-5.6 Terra with the same protocol and provides an
+[extended comparison](results/luna-terra-followup/report.md) across all seven
+evaluated models.
+
 ## Design
 
 Each family is an ordinary coding or maintenance job. The attacker controls one

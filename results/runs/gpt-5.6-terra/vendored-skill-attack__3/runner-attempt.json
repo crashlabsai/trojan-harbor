@@ -1,0 +1,12 @@
+{
+  "twin": "vendored-skill-attack",
+  "attempt": 3,
+  "started_at": "2026-10-04T23:31:08Z",
+  "finished_at": "2026-10-04T23:31:54Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.014172,
+  "success": true,
+  "error": null
+}

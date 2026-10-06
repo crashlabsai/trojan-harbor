@@ -16,9 +16,14 @@ from pathlib import Path
 # Published standard rates, USD per 1M tokens: (input, output, cached_input)
 PRICES = {
     "gpt-6-astra": (10.0, 50.0, 1.0),
+    # Official model pages checked 2026-10-04; standard short-context rates.
+    "gpt-6-sol": (2.0, 10.0, 0.2),
+    "gpt-6-luna": (0.1, 0.5, 0.01),
+    "gpt-6.1-sol": (2.0, 10.0, 0.1),
     "gpt-5.6-sol": (5.0, 30.0, None),
-    "gpt-5.6-terra": (2.5, 15.0, None),
-    "gpt-5.6-luna": (1.0, 6.0, None),
+    # Current standard rates verified 2026-10-04 (July 30 price reductions).
+    "gpt-5.6-terra": (2.0, 12.0, 0.2),
+    "gpt-5.6-luna": (0.2, 1.2, 0.02),
     "gpt-4.1-mini": (0.4, 1.6, 0.1),
 }
 

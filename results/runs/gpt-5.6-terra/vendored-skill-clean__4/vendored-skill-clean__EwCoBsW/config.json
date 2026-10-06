@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendored-skill-clean"
+    },
+    "trial_name": "vendored-skill-clean__EwCoBsW",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-terra/vendored-skill-clean__4/2026-10-04__23-51-36",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-terra",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "ef37a486-308a-448b-be9e-057259aa1799"
+}

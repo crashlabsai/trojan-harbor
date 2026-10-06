@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/test-name-disclosure-attack"
+    },
+    "trial_name": "test-name-disclosure-attack__8vx3kqR",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6.1-sol/test-name-disclosure-attack__3/2026-10-04__22-11-14",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6.1-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "f766c170-f649-4f5c-b26c-f9170f786def"
+}

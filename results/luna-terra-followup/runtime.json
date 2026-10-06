@@ -1,0 +1,57 @@
+{
+  "captured_at": "2026-10-04T23:32:09Z",
+  "source_commit": "c95e2f2de61fc1361c8bfe42f8b1d7683de6cd22",
+  "suite_commit": "3a4b88469174135c37fa53300aba25775ebf1f81",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.49-x86_64-with-glibc2.34",
+  "docker": "25.0.14 / 25.0.16",
+  "compose": "2.40.3",
+  "buildx": "github.com/docker/buildx v0.37.2 2d379c0c3f22da0d2759d132a0ec81ca949098f0",
+  "packages": {
+    "harbor": "0.23.0",
+    "litellm": "1.101.0",
+    "openai": "2.54.0"
+  },
+  "harness_install": {
+    "url": "https://github.com/harbor-framework/harbor",
+    "vcs_info": {
+      "vcs": "git",
+      "commit_id": "96a13544537e54be84c0f316f8c3156769380684",
+      "requested_revision": "96a13544537e54be84c0f316f8c3156769380684"
+    }
+  },
+  "model_prices_usd_per_million": {
+    "openai/gpt-5.6-luna": {
+      "input": 0.2,
+      "output": 1.2,
+      "cached_input": 0.02
+    },
+    "openai/gpt-5.6-terra": {
+      "input": 2.0,
+      "output": 12.0,
+      "cached_input": 0.2
+    }
+  },
+  "config_sha256": "ba38e5ebd3280d32ce46e0e504d40baf68d672fa073c4ea0afc42b007b28d6cc",
+  "protocol_note": "Two models run concurrently, three workers per model, same seeded order and pinned protocol. Retain completed invalid trials without retry; continue remaining slots. Previous batches preserved.",
+  "tools_sha256": {
+    "tools/run_batch.py": "ca444e3b1dcd591c6c73af2e50b1d8fc48ad9ddd5250aa2e4bffd480a27fef96",
+    "tools/compare_models.py": "1f58e15029d331bff7f5666b242e6203c8dada98fb6be79795f9257a94c4dfc1",
+    "tools/archive_batch.py": "4c1878d3a75dc102bd030484e4104893faf664b50a50b7636a255307605fe317",
+    "tools/aggregate_results.py": "f99235f2d1b9cb6407099527e117face8dde974c90d5c9e03cb75491ec414c6b",
+    "tools/cost.py": "1c933869fcd07af0c27b74d627106f27e5c03bc360b32193dc0d94aa947f13de",
+    "tools/exposure.py": "9b9a950816f8aadc5c8e724ebe5471984b77264a02ae1edf55a9c91082003282"
+  },
+  "final_validation": {
+    "checked_at": "2026-10-04T23:53:48.373492+00:00",
+    "new_attempts": 160,
+    "comparison_attempts": 560,
+    "new_valid": 160,
+    "new_invalid": 0,
+    "seeded_order_and_no_retries": true,
+    "frozen_inputs_unchanged": true,
+    "model_id_task_checksums_agent_kwargs_match": true,
+    "host_credential_matches_in_new_archives": 0,
+    "focused_checks": "16 passed (test_batch_runner, test_model_comparison, test_report_metrics)"
+  }
+}

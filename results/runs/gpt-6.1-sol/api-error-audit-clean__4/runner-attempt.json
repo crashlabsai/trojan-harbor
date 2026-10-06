@@ -1,0 +1,11 @@
+{
+  "twin": "api-error-audit-clean",
+  "attempt": 4,
+  "started_at": "2026-10-04T22:11:44Z",
+  "finished_at": "2026-10-04T22:12:45Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.008904,
+  "success": true,
+  "error": null
+}

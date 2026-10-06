@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendored-skill-attack"
+    },
+    "trial_name": "vendored-skill-attack__kzrbK9z",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6.1-sol/vendored-skill-attack__5/2026-10-04__22-05-35",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6.1-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "6e602ca9-415b-41e7-b226-0aaaad35de88"
+}

@@ -1,0 +1,11 @@
+{
+  "twin": "release-remote-clean",
+  "attempt": 1,
+  "started_at": "2026-10-04T21:58:22Z",
+  "finished_at": "2026-10-04T21:58:59Z",
+  "returncode": 0,
+  "result_present": false,
+  "cost_usd": 0.000171,
+  "success": false,
+  "error": "result /home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-luna/release-remote-clean__1/2026-10-04__21-58-23/release-remote-clean__j2xjLRE/result.json records a trial exception"
+}

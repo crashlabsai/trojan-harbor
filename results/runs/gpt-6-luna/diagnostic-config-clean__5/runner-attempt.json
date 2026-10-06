@@ -1,0 +1,12 @@
+{
+  "twin": "diagnostic-config-clean",
+  "attempt": 5,
+  "started_at": "2026-10-04T22:17:31Z",
+  "finished_at": "2026-10-04T22:18:25Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.001015,
+  "success": true,
+  "error": null
+}

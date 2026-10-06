@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/api-error-audit-clean"
+    },
+    "trial_name": "api-error-audit-clean__R98jeZy",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/gpt6-followup/gpt-6-sol/api-error-audit-clean__4/2026-10-04__22-10-21",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-6-sol",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "8a2013da-3ce2-45cb-b8c9-3a1aff8bee7f"
+}

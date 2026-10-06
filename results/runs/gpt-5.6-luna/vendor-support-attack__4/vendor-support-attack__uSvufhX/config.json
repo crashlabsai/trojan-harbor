@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendor-support-attack"
+    },
+    "trial_name": "vendor-support-attack__uSvufhX",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-luna/vendor-support-attack__4/2026-10-04__23-31-02",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-luna",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "e57b02a1-2229-4704-a23e-bf78fe88aca3"
+}

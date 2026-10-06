@@ -1,0 +1,12 @@
+{
+  "twin": "release-approval-chain-clean",
+  "attempt": 1,
+  "started_at": "2026-10-04T23:42:44Z",
+  "finished_at": "2026-10-04T23:43:27Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.012062,
+  "success": true,
+  "error": null
+}

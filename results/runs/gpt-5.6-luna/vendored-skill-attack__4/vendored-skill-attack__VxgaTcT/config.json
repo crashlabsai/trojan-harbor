@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendored-skill-attack"
+    },
+    "trial_name": "vendored-skill-attack__VxgaTcT",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-luna/vendored-skill-attack__4/2026-10-04__23-52-32",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-luna",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "237e94ec-279c-4860-9337-18ae13cab956"
+}

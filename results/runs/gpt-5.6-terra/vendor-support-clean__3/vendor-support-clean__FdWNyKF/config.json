@@ -1,0 +1,17 @@
+{
+    "task": {
+        "path": "/home/vercel-sandbox/trojan-harbor/tasks/vendor-support-clean"
+    },
+    "trial_name": "vendor-support-clean__FdWNyKF",
+    "trials_dir": "/home/vercel-sandbox/trojan-harbor/jobs/luna-terra-followup/gpt-5.6-terra/vendor-support-clean__3/2026-10-04__23-44-06",
+    "agent": {
+        "name": "terminus-2",
+        "model_name": "openai/gpt-5.6-terra",
+        "kwargs": {
+            "enable_summarize": false,
+            "proactive_summarization_threshold": 0,
+            "max_turns": 60
+        }
+    },
+    "job_id": "b9146e62-85bc-43a3-9f0e-f87be4b84ce9"
+}

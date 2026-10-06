@@ -1,0 +1,11 @@
+{
+  "twin": "vendor-support-clean",
+  "attempt": 1,
+  "started_at": "2026-10-04T22:13:15Z",
+  "finished_at": "2026-10-04T22:14:26Z",
+  "returncode": 0,
+  "result_present": true,
+  "cost_usd": 0.021018,
+  "success": true,
+  "error": null
+}

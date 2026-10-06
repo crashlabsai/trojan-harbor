@@ -1,0 +1,12 @@
+{
+  "twin": "release-remote-clean",
+  "attempt": 1,
+  "started_at": "2026-10-04T23:30:16Z",
+  "finished_at": "2026-10-04T23:31:01Z",
+  "returncode": 0,
+  "result_present": true,
+  "invalid_result": false,
+  "cost_usd": 0.001615,
+  "success": true,
+  "error": null
+}
