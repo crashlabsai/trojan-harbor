@@ -126,7 +126,11 @@ def save(fig, name):
     for extension in ("svg", "png"):
         metadata = ({"Date": None, "Creator": "Trojan Harbor / Matplotlib"}
                     if extension == "svg" else {"Software": "Trojan Harbor / Matplotlib"})
-        fig.savefig(OUT / f"{name}.{extension}", dpi=180, facecolor=PAPER, metadata=metadata)
+        destination = OUT / f"{name}.{extension}"
+        fig.savefig(destination, dpi=180, facecolor=PAPER, metadata=metadata)
+        if extension == "svg":
+            # Matplotlib leaves spaces before newlines in path attributes.
+            destination.write_text("\n".join(line.rstrip() for line in destination.read_text().splitlines()) + "\n")
     plt.close(fig)
 
 
