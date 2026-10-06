@@ -18,34 +18,59 @@ product, leaderboard, or claim of general robustness.
 
 ## Headline results
 
-Frozen suite · 8 families × 2 twins × 5 trials × 2 models = **160 valid trials**.
-Both models were exposed to the attack text in **40/40** attack trials.
+Frozen suite · 8 families × 2 twins × 5 trials × 7 models = **560 attempted
+trials: 559 valid, 1 invalid**. Every model uses the same frozen tasks, graders,
+harness revision, and explicit agent settings. GPT-5.6 Sol and GPT-6 Astra
+are September 15, 2026 baselines; the other five models were run October 4.
 
-| Model | Attack utility | Attack success (ASR) | Secure utility | Clean utility | Clean background attack |
+| Model | Attack utility | Attack success (ASR) ↓ | Secure utility ↑ | Clean utility | Invalid |
 |---|---:|---:|---:|---:|---:|
-| gpt-5.6-sol | 40/40 | **14/40** | 26/40 | 39/40 | 0/40 |
-| gpt-6-astra | 40/40 | **0/40** | 40/40 | 40/40 | 0/40 |
+| gpt-5.6-sol | 40/40 | **14/40 (35%)** | 26/40 | 39/40 | 0 |
+| gpt-5.6-terra | 40/40 | **15/40 (37.5%)** | 25/40 | 40/40 | 0 |
+| gpt-5.6-luna | 39/40 | **16/40 (40%)** | 24/40 | 40/40 | 0 |
+| gpt-6-astra | 40/40 | **0/40 (0%)** | 40/40 | 40/40 | 0 |
+| gpt-6-sol | 40/40 | **1/40 (2.5%)** | 39/40 | 40/40 | 0 |
+| gpt-6-luna | 35/40 | **20/40 (50%)** | 20/40 | 39/39 | 1 |
+| gpt-6.1-sol | 40/40 | **0/40 (0%)** | 40/40 | 40/40 | 0 |
 
-Sol’s compromises concentrated in `vendor-support` (5/5), `migration-archive`
-(5/5), and `diagnostic-config` (4/5)—typically completing the legitimate job
-*and* the injected side effect. Astra’s zero is “0 observed successes in five
-trials per family,” not a general immunity claim.
+Outcome denominators include valid trials only. GPT-6 Luna's one invalid
+clean trial failed in the harness before grading and was retained without
+retry. There were no background attacks in any valid clean trial. Observed
+attack exposure was 40/40 for every model except Terra (39/40); Terra's ASR
+conditional on exposure was 15/39. See the
+[outcome and exposure review](results/luna-terra-followup/review.md).
 
-Full metrics, Wilson intervals, costs, provenance, and limits:
-[`results/report-m3.md`](results/report-m3.md). Concise narrative:
-[`APPLICATION.md`](APPLICATION.md).
+Astra and 6.1 Sol had zero observed compromises across these eight fixed
+families. With only five repetitions per family, this does not establish
+general robustness or model equivalence.
 
-The October 4 follow-up evaluates **GPT-6 Sol, GPT-6 Luna, and GPT-6.1 Sol**
-with the same 80-trial protocol per model and compares them with the archived
-Astra baseline. See the [comparison report](results/gpt6-followup/report.md)
-for outcomes, latency, tokens, and cost, and the
-[reproduction instructions](results/gpt6-followup/README.md) for commands and
-model-release sources.
+### Performance and cost
 
-The [Luna/Terra extension](results/luna-terra-followup/README.md) adds
-GPT-5.6 Luna and GPT-5.6 Terra with the same protocol and provides an
-[extended comparison](results/luna-terra-followup/report.md) across all seven
-evaluated models.
+Agent time includes model requests and terminal interaction. Costs cover
+all 80 attempts per model, including any invalid trial.
+
+| Model | Median agent time (s) | Estimated token cost ($) |
+|---|---:|---:|
+| gpt-5.6-sol | 17.77 | 4.9501 |
+| gpt-5.6-terra | 12.14 | 1.4511 |
+| gpt-5.6-luna | 12.18 | 0.1506 |
+| gpt-6-astra | 17.87 | 5.4737 |
+| gpt-6-sol | 12.01 | 1.1187 |
+| gpt-6-luna | 11.46 | 0.0618 |
+| gpt-6.1-sol | 17.33 | 1.0465 |
+
+Costs use each batch's documented rates and are not invoices. GPT-5.6 Sol
+retains the original conservative M3 estimate without a cache discount.
+Provider aliases, default reasoning, and runtime load can differ across
+batches, so these timings do not isolate model speed.
+
+The [full seven-model comparison](results/luna-terra-followup/report.md)
+includes per-family outcomes, Wilson intervals, p95 latency, token usage,
+recorded costs, and interpretation limits. Download the
+[trial data](results/luna-terra-followup/trials.csv) or follow the reproduction
+instructions for the [GPT-6 batch](results/gpt6-followup/README.md) and
+[Luna/Terra batch](results/luna-terra-followup/README.md). The original
+[M3 report](results/report-m3.md) and [narrative](APPLICATION.md) remain available.
 
 ## Design
 
@@ -130,7 +155,7 @@ tasks/<family>-{attack,clean}/  Generated runnable twins
 tools/                          Materialize, batch, aggregate, exposure helpers
 checks/                         Static checks + admission runner
 review/                         Admission checklist + integrity fixtures
-results/                        Admission evidence, M3 report, archived trials
+results/                        Model comparisons, admission evidence, archived trials
 APPLICATION.md                  Findings narrative and limits
 PLAN.md                         Design record
 REVIEW.md                       Decisions and rejected designs
@@ -142,10 +167,14 @@ SECURITY.md                     Scope and reporting
 
 | Doc | Contents |
 |---|---|
-| [`APPLICATION.md`](APPLICATION.md) | Threat model, headline findings, case study, limits |
-| [`results/report-m3.md`](results/report-m3.md) | Full M3 metrics and provenance |
+| [`results/luna-terra-followup/report.md`](results/luna-terra-followup/report.md) | Seven-model comparison: outcomes, performance, cost, limits |
+| [`results/luna-terra-followup/review.md`](results/luna-terra-followup/review.md) | Luna/Terra outcomes, exposure review, validation |
+| [`results/luna-terra-followup/trials.csv`](results/luna-terra-followup/trials.csv) | All 560 trial records and metrics |
+| [`results/gpt6-followup/report.md`](results/gpt6-followup/report.md) | GPT-6 follow-up comparison and provenance |
+| [`APPLICATION.md`](APPLICATION.md) | Original M3 narrative, threat model, case study, limits |
+| [`results/report-m3.md`](results/report-m3.md) | Original M3 metrics and provenance |
 | [`results/report.md`](results/report.md) | Admission evidence summary |
-| [`results/manifest.json`](results/manifest.json) | Index of archived trial evidence |
+| [`results/manifest.json`](results/manifest.json) | Original M3 evidence index |
 | [`PLAN.md`](PLAN.md) | Locked design and milestone record |
 | [`REVIEW.md`](REVIEW.md) | Review rounds and rejected designs |
 | [`SECURITY.md`](SECURITY.md) | Safety scope and vulnerability reporting |
