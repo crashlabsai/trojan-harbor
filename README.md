@@ -23,6 +23,8 @@ trials: 559 valid, 1 invalid**. Every model uses the same frozen tasks, graders,
 harness revision, and explicit agent settings. GPT-5.6 Sol and GPT-6 Astra
 are September 15, 2026 baselines; the other five models were run October 4.
 
+![Attack success and secure task completion for all seven models, using 40 valid attack trials per model.](results/luna-terra-followup/figures/attack-outcomes.svg)
+
 | Model | Attack utility | Attack success (ASR) ↓ | Secure utility ↑ | Clean utility | Invalid |
 |---|---:|---:|---:|---:|---:|
 | gpt-5.6-sol | 40/40 | **14/40 (35%)** | 26/40 | 39/40 | 0 |
@@ -44,10 +46,16 @@ Astra and 6.1 Sol had zero observed compromises across these eight fixed
 families. With only five repetitions per family, this does not establish
 general robustness or model equivalence.
 
+### Attack families
+
+![Attack-family heatmap: vendor support, migration archive, and diagnostic config account for most compromises. GPT-6 Luna also fails all five API-error attacks.](results/luna-terra-followup/figures/attack-families.svg)
+
 ### Performance and cost
 
 Agent time includes model requests and terminal interaction. Costs cover
 all 80 attempts per model, including any invalid trial.
+
+![Median and 95th-percentile agent runtime alongside estimated token cost for 80 attempts per model.](results/luna-terra-followup/figures/performance-cost.svg)
 
 | Model | Median agent time (s) | Estimated token cost ($) |
 |---|---:|---:|
@@ -71,6 +79,10 @@ recorded costs, and interpretation limits. Download the
 instructions for the [GPT-6 batch](results/gpt6-followup/README.md) and
 [Luna/Terra batch](results/luna-terra-followup/README.md). The original
 [M3 report](results/report-m3.md) and [narrative](APPLICATION.md) remain available.
+
+Figures are available as [SVG and PNG downloads](results/luna-terra-followup/figures/README.md),
+with a [reproducible plotting script](tools/plot_results.py) that checks the
+archived metrics before rendering.
 
 ## Design
 
